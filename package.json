@@ -19,6 +19,6 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "sql-to-nosql": "^0.0.2"
+    "sql-to-nosql": "^0.0.3"
   }
 }

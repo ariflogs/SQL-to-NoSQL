@@ -4,6 +4,11 @@ As the name suggests, **sql-to-nosql** lets you run SQL scripts on your NoSQL da
 ---
 The project is under active development and is not yet ready to use in production. I'm aiming to launch *v-1.0* by November 2023 with some of the most common sql operations. 🤞
 
+### Installation
+---
+```bash
+npm insall sql-to-nosql
+```
 
 ### Roadmap
 - [ ] Database
@@ -47,9 +52,4 @@ The project is under active development and is not yet ready to use in productio
     - [ ] IS NOT NULL
 
 
-### Installation
----
-```bash
-npm insall sql-to-nosql
-```
 
