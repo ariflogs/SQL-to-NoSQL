@@ -1,5 +1,5 @@
 {
-  "name": "mongoql",
+  "name": "sql-to-nosql",
   "version": "0.0.1",
   "description": "Run SQL quries on your Mongodb database.",
   "main": "src/index.js",
