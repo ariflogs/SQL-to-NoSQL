@@ -2,6 +2,11 @@
   "name": "sql-to-nosql",
   "version": "0.0.1",
   "description": "Run SQL quries on your Mongodb database.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ariflogs/SQL-to-NoSQL"
+  },
+  "homepage": "https://github.com/ariflogs/SQL-to-NoSQL",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
