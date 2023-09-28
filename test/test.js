@@ -1,3 +1,3 @@
-// import { greeting } from "sql-to-nosql"
+import { greetings } from "sql-to-nosql"
 
-// greeting()
+console.log(greetings())
