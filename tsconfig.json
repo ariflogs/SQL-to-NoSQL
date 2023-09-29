@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "module": "ES6",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es2016",
     "moduleResolution": "node",
     "sourceMap": true,
-    "sourceRoot": "src",
-    "outDir": "dist"
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "paths": {
+      "@utils/*": ["src/utils/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

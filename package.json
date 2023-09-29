@@ -14,11 +14,11 @@
   },
   "author": "Arif Hossain",
   "license": "MIT",
-  "type": "module",
   "devDependencies": {
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "sql-to-nosql": "^0.0.3"
-  }
+  },
+  "type": "module"
 }
