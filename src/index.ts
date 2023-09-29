@@ -14,3 +14,4 @@ export const SqlToNoSql = (query: string) => {
 };
 
 console.log(SqlToNoSql("SELECT * FROM users"));
+console.log(SqlToNoSql("select * from users where id = 1"));

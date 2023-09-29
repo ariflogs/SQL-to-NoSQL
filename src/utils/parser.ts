@@ -1,17 +1,41 @@
-export const parseQuery = (query: string) => {
-  const [command, ...rest] = query.split(" ");
+// select * from users where id = 1;
 
-  if (command !== "SELECT") {
-    throw new Error("Only SELECT queries are supported");
+import { ParsedSqlType } from "types/sql";
+
+export const parseQuery = (query: string): ParsedSqlType => {
+  const parsedQuery: ParsedSqlType = {
+    command: "select",
+    table: "",
+    columns: [],
+    filters: null,
+  };
+
+  const [command, ...rest] = query.toLocaleLowerCase().split(" ");
+
+  if (command !== "select") {
+    throw new Error("Only select queries are supported");
   }
+  parsedQuery.command = command;
 
-  const fromIndex = rest.findIndex((word) => word === "FROM");
+  const fromIndex = rest.indexOf("from");
   if (fromIndex === -1) {
     throw new Error("Invalid query, missing FROM keyword");
   }
+  parsedQuery.table = rest[fromIndex + 1];
+  parsedQuery.columns = rest.slice(0, fromIndex);
 
-  const columns = rest.slice(0, fromIndex);
-  const table = rest[fromIndex + 1];
+  const whereIndex = rest.indexOf("where");
+  if (whereIndex !== -1) {
+    parsedQuery.filters = [
+      {
+        column: rest[whereIndex + 1],
+        // FIXME: you know what to do here!
+        operator: rest[whereIndex + 2] as "=",
+        value: rest[whereIndex + 3],
+      },
+    ];
+    // throw new Error("Invalid query, WHERE clause is not supported");
+  }
 
-  return { command, table, columns };
+  return parsedQuery;
 };
