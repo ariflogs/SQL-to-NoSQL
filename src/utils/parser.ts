@@ -34,7 +34,6 @@ export const parseQuery = (query: string): ParsedSqlType => {
         value: rest[whereIndex + 3],
       },
     ];
-    // throw new Error("Invalid query, WHERE clause is not supported");
   }
 
   return parsedQuery;

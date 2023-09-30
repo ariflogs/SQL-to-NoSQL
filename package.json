@@ -10,12 +10,14 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx prettier . --check && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "npx prettier . --write"
   },
   "author": "Arif Hossain",
   "license": "MIT",
   "devDependencies": {
+    "prettier": "3.0.3",
     "typescript": "^5.2.2"
   },
   "dependencies": {

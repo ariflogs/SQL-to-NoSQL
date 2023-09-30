@@ -1,3 +1,3 @@
-import { greetings } from "sql-to-nosql"
+import { greetings } from "sql-to-nosql";
 
-console.log(greetings())
+console.log(greetings());
