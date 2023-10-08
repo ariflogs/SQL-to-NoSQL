@@ -17,14 +17,14 @@ npm insall sql-to-nosql
 ### Roadmap
 
 - [ ] Database
-  - [ ] MongoDB
+  - [x] MongoDB
 - [ ] Commands
-  - [ ] SELECT
+  - [x] SELECT
   - [ ] INSERT
   - [ ] DELETE
   - [ ] UPDATE
 - [ ] Clauses
-  - [ ] WHERE
+  - [x] WHERE
   - [ ] ORDER BY
   - [ ] LIMIT
   - [ ] OFFSET
@@ -41,7 +41,7 @@ npm insall sql-to-nosql
   - [ ] MIN
   - [ ] MAX
 - [ ] Operators
-  - [ ] =
+  - [x] =
   - [ ] !=
   - [ ] >
   - [ ] <

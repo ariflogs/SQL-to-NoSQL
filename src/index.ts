@@ -1,14 +1,16 @@
+import { MongoClient } from "mongodb";
+
 import { mappings } from "./config/mapping.js";
 import { parseQuery } from "./utils/parser.js";
 import { connect } from "./utils/database.js";
 import { SqlToNoSqlType } from "./types/index.js";
 
 export class SqlToNoSql {
-  constructor(private config: SqlToNoSqlType) {
-    connect(this.config.connection);
-  }
+  client: MongoClient | undefined;
 
-  run(query: string) {
+  constructor(private config: SqlToNoSqlType) {}
+
+  async run(query: string) {
     if (!query) {
       throw new Error("missing query!");
     }
@@ -19,6 +21,7 @@ export class SqlToNoSql {
     }
 
     const q = parseQuery(query);
+    this.client = await connect(this.config.connection);
 
     const filters: {
       [key: string]: {
@@ -43,15 +46,18 @@ export class SqlToNoSql {
       query: filters,
     };
 
-    return mongoQuery;
+    try {
+      await this.client.connect();
+      const db = this.client.db();
+      const collection = db.collection(mongoQuery.collection);
+      const data = await collection[mongoQuery[q.command]](
+        mongoQuery.query,
+      ).toArray();
+
+      return data;
+    } catch (err) {
+      console.error(err);
+      throw Error("Something went wrong!");
+    }
   }
 }
-
-const runner = new SqlToNoSql({
-  srcDBtype: "postgresql",
-  destDBtype: "mongodb",
-  connection: "mongodb://localhost:27017",
-});
-
-console.log(runner.run("SELECT * FROM users"));
-console.log(runner.run("select * from users where id = 1"));

@@ -1,9 +1,9 @@
 export const sqlToMongoDBcommandsMapping = {
   select: "find",
-  insert: "insertOne",
-  update: "updateOne",
-  delete: "deleteOne",
-};
+  insert: "insertMany",
+  update: "updateMany",
+  delete: "deleteMany",
+} as const;
 
 export const sqlToMongoDBoperatorsMapping = {
   "=": "$eq",
@@ -12,7 +12,7 @@ export const sqlToMongoDBoperatorsMapping = {
   ">=": "$gte",
   "<=": "$lte",
   "<>": "$ne",
-};
+} as const;
 
 export const mappings = {
   mongodb: {
