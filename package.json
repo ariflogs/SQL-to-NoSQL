@@ -21,6 +21,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "mongodb": "^6.1.0",
     "sql-to-nosql": "^0.0.3"
   },
   "type": "module"
