@@ -1,6 +1,6 @@
 {
   "name": "sql-to-nosql",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Run SQL quries on your Mongodb database.",
   "repository": {
     "type": "git",
@@ -9,20 +9,30 @@
   "homepage": "https://github.com/ariflogs/SQL-to-NoSQL",
   "main": "dist/index.js",
   "scripts": {
+    "dev": "tsc -w",
     "start": "tsc && node dist/index.js",
     "build": "npx prettier . --check && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "npx prettier . --write"
   },
-  "author": "Arif Hossain",
+  "author": {
+    "name": "Arif Hossain",
+    "email": "devarifhossain@gmail.com",
+    "url": "https://ariflogs.com"
+  },
+  "keywords": [
+    "ORM",
+    "SQL",
+    "NoSQL",
+    "SQL to NoSQL"
+  ],
   "license": "MIT",
   "devDependencies": {
     "prettier": "3.0.3",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "mongodb": "^6.1.0",
-    "sql-to-nosql": "^0.0.3"
+    "mongodb": "^6.1.0"
   },
   "type": "module"
 }
