@@ -1,6 +1,6 @@
 {
   "name": "sql-to-nosql",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Run SQL quries on your Mongodb database.",
   "repository": {
     "type": "git",
@@ -10,15 +10,18 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx prettier . --check && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "npx prettier . --write"
   },
   "author": "Arif Hossain",
   "license": "MIT",
   "devDependencies": {
+    "prettier": "3.0.3",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "mongodb": "^6.1.0",
     "sql-to-nosql": "^0.0.3"
   },
   "type": "module"
