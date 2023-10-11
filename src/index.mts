@@ -15,10 +15,10 @@ export class SqlToNoSql {
       throw new Error("missing query!");
     }
 
-    // TODO: add better validation!
-    if ([";", "(", ")"].some((char) => query.includes(char))) {
-      throw new Error("Invalid query, your query contains invalid characters!");
-    }
+    // // TODO: add better validation!
+    // if ([";", "(", ")"].some((char) => query.includes(char))) {
+    //   throw new Error("Invalid query, your query contains invalid characters!");
+    // }
 
     const q = parseQuery(query);
 
