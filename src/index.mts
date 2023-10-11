@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 
-import { mappings } from "./config/mapping.js";
-import { parseQuery } from "./utils/parser.js";
-import { connect } from "./utils/database.js";
-import { SqlToNoSqlType } from "./types/index.js";
+import { mappings } from "./config/mapping.mjs";
+import { parseQuery } from "./utils/parser.mjs";
+import { connect } from "./utils/database.mjs";
+import { SqlToNoSqlType } from "./types/index.mjs";
 
 export class SqlToNoSql {
   client: MongoClient | undefined;

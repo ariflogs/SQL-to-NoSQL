@@ -36,6 +36,5 @@
   },
   "dependencies": {
     "mongodb": "^6.1.0"
-  },
-  "type": "module"
+  }
 }

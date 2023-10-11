@@ -1,6 +1,6 @@
 // select * from users where id = 1;
 
-import { ParsedSqlType } from "types/sql";
+import { ParsedSqlType } from "types/sql.mjs";
 
 export const parseQuery = (query: string): ParsedSqlType => {
   const parsedQuery: ParsedSqlType = {
