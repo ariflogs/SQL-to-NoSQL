@@ -1,16 +1,19 @@
 {
   "name": "sql-to-nosql",
-  "version": "0.1.0",
+  "version": "0.1.01",
   "description": "Run SQL quries on your Mongodb database.",
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/package/sql-to-nosql"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ariflogs/SQL-to-NoSQL"
   },
   "homepage": "https://github.com/ariflogs/SQL-to-NoSQL",
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
     "dev": "tsc -w",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/index.mjs",
     "build": "npx prettier . --check && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "npx prettier . --write"
@@ -33,6 +36,5 @@
   },
   "dependencies": {
     "mongodb": "^6.1.0"
-  },
-  "type": "module"
+  }
 }

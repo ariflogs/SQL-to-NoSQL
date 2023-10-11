@@ -1,6 +1,6 @@
 // select * from users where id = 1;
 
-import { ParsedSqlType } from "types/sql";
+import { ParsedSqlType } from "types/sql.mjs";
 
 export const parseQuery = (query: string): ParsedSqlType => {
   const parsedQuery: ParsedSqlType = {
@@ -10,28 +10,32 @@ export const parseQuery = (query: string): ParsedSqlType => {
     filters: null,
   };
 
-  const [command, ...rest] = query.toLocaleLowerCase().split(" ");
+  const [command, ...rest] = query.split(" ");
 
-  if (command !== "select") {
+  const lowerCaseCommand = command.toLowerCase();
+  if (lowerCaseCommand !== "select") {
     throw new Error("Only select queries are supported");
   }
-  parsedQuery.command = command;
+  // parsedQuery.command = command;
 
-  const fromIndex = rest.indexOf("from");
+  const fromIndex = rest.findIndex((word) => word.toLowerCase() === "from");
   if (fromIndex === -1) {
     throw new Error("Invalid query, missing FROM keyword");
   }
   parsedQuery.table = rest[fromIndex + 1];
   parsedQuery.columns = rest.slice(0, fromIndex);
 
-  const whereIndex = rest.indexOf("where");
+  const whereIndex = rest.findIndex((word) => word.toLowerCase() === "where");
   if (whereIndex !== -1) {
     parsedQuery.filters = [
       {
         column: rest[whereIndex + 1],
-        // FIXME: you know what to do here!
         operator: rest[whereIndex + 2] as "=",
-        value: rest[whereIndex + 3],
+        // to handle string and number values
+        value:
+          Number(rest[whereIndex + 3]) ||
+          // remove quotes from string values
+          String(rest[whereIndex + 3]).replace(/^'(.*)'$/, "$1"),
       },
     ];
   }

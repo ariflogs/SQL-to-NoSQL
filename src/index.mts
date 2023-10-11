@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 
-import { mappings } from "./config/mapping.js";
-import { parseQuery } from "./utils/parser.js";
-import { connect } from "./utils/database.js";
-import { SqlToNoSqlType } from "./types/index.js";
+import { mappings } from "./config/mapping.mjs";
+import { parseQuery } from "./utils/parser.mjs";
+import { connect } from "./utils/database.mjs";
+import { SqlToNoSqlType } from "./types/index.mjs";
 
 export class SqlToNoSql {
   client: MongoClient | undefined;
@@ -15,13 +15,12 @@ export class SqlToNoSql {
       throw new Error("missing query!");
     }
 
-    // TODO: add better validation!
-    if ([";", "(", ")"].some((char) => query.includes(char))) {
-      throw new Error("Invalid query, your query contains invalid characters!");
-    }
+    // // TODO: add better validation!
+    // if ([";", "(", ")"].some((char) => query.includes(char))) {
+    //   throw new Error("Invalid query, your query contains invalid characters!");
+    // }
 
     const q = parseQuery(query);
-    this.client = await connect(this.config.connection);
 
     const filters: {
       [key: string]: {
@@ -47,9 +46,14 @@ export class SqlToNoSql {
     };
 
     try {
-      await this.client.connect();
+      if (!this.client) {
+        this.client = await connect(this.config.connection);
+        await this.client.connect();
+      }
+
       const db = this.client.db();
       const collection = db.collection(mongoQuery.collection);
+
       const data = await collection[mongoQuery[q.command]](
         mongoQuery.query,
       ).toArray();
