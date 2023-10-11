@@ -21,7 +21,6 @@ export class SqlToNoSql {
     }
 
     const q = parseQuery(query);
-    this.client = await connect(this.config.connection);
 
     const filters: {
       [key: string]: {
@@ -47,9 +46,14 @@ export class SqlToNoSql {
     };
 
     try {
-      await this.client.connect();
+      if (!this.client) {
+        this.client = await connect(this.config.connection);
+        await this.client.connect();
+      }
+
       const db = this.client.db();
       const collection = db.collection(mongoQuery.collection);
+
       const data = await collection[mongoQuery[q.command]](
         mongoQuery.query,
       ).toArray();

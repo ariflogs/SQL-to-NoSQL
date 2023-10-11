@@ -10,10 +10,10 @@
     "url": "https://github.com/ariflogs/SQL-to-NoSQL"
   },
   "homepage": "https://github.com/ariflogs/SQL-to-NoSQL",
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "scripts": {
     "dev": "tsc -w",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/index.mjs",
     "build": "npx prettier . --check && tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretty": "npx prettier . --write"
