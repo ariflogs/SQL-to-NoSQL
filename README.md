@@ -72,7 +72,7 @@ console.log(resp);
   - [x] !=
   - [x] >
   - [x] <
-  - [x] >=
+  - [x] > =
   - [x] <=
   - [ ] AND
   - [ ] OR
