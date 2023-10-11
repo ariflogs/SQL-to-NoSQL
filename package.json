@@ -11,9 +11,10 @@
   "scripts": {
     "dev": "tsc -w",
     "start": "tsc && node dist/index.mjs",
-    "build": "npx prettier . --check && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "pretty": "npx prettier . --write"
+    "check": "npx prettier . --check",
+    "pretty": "npx prettier . --write",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
     "name": "Arif Hossain",
