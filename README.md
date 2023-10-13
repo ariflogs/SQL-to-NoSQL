@@ -12,6 +12,14 @@ The project is under active development and is not yet ready to use in productio
 
 ```bash
 npm insall sql-to-nosql
+
+# or
+
+yarn add sql-to-nosql
+
+# or
+
+pnpm add sql-to-nosql
 ```
 
 ## Usage
