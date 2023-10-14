@@ -13,7 +13,7 @@
     "start": "tsc && node dist/index.mjs",
     "check": "npx prettier . --check",
     "pretty": "npx prettier . --write",
-    "build": "tsc",
+    "build": "tsc && npm run check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": {
