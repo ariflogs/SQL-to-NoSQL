@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, MongoServerError } from "mongodb";
 
 import { mappings } from "./config/mapping.mjs";
 import { parseQuery } from "./utils/parser.mjs";
@@ -22,46 +22,68 @@ export class SqlToNoSql {
 
     const q = parseQuery(query);
 
-    const filters: {
-      [key: string]: {
-        [operator: string]: string | number;
-      };
-    } = {};
-
-    // Convert parsed filters to MongoDB query
-    q.filters?.forEach((filter) => {
-      const { column, operator, value } = filter;
-
-      if (!filters[column]) {
-        filters[column] = {
-          [mappings["mongodb"]["operators"][operator]]: value,
+    if (q.command === "select"){
+      const filters: {
+        [key: string]: {
+          [operator: string]: string | number;
         };
+      } = {};
+  
+      // Convert parsed filters to MongoDB query
+      q.filters?.forEach((filter) => {
+        const { column, operator, value } = filter;
+  
+        if (!filters[column]) {
+          filters[column] = {
+            [mappings["mongodb"]["operators"][operator]]: value,
+          };
+        }
+      });
+  
+      const mongoQuery = {
+        collection: q.table,
+        [q.command]: mappings["mongodb"]["commands"][q.command],
+        query: filters,
+      };
+  
+      try {
+        if (!this.client) {
+          this.client = await connect(this.config.connection);
+          await this.client.connect();
+        }
+  
+        const db = this.client.db();
+        const collection = db.collection(mongoQuery.collection);
+  
+        const data = await collection[mongoQuery[q.command]](
+          mongoQuery.query,
+        ).toArray();
+  
+        return data;
+      } catch (err) {
+        console.error(err);
+        throw Error("Something went wrong!");
       }
-    });
-
-    const mongoQuery = {
-      collection: q.table,
-      [q.command]: mappings["mongodb"]["commands"][q.command],
-      query: filters,
-    };
-
-    try {
-      if (!this.client) {
-        this.client = await connect(this.config.connection);
-        await this.client.connect();
+    } else if (q.command === "create") {
+      try {
+        if (!this.client) {
+          this.client = await connect(this.config.connection);
+          await this.client.connect();
+        }
+  
+        const db = this.client.db();
+        const result = await db.createCollection(q.table);
+        console.log("Mongo result", result);
+        return result;
+      } catch (err) {
+        if (err instanceof MongoServerError) {
+          if (err.codeName === 'NamespaceExists'){
+            console.error("Collection already exists: " + q.table)
+          }
+        } else {
+          throw Error("Something went wrong!");
+        }
       }
-
-      const db = this.client.db();
-      const collection = db.collection(mongoQuery.collection);
-
-      const data = await collection[mongoQuery[q.command]](
-        mongoQuery.query,
-      ).toArray();
-
-      return data;
-    } catch (err) {
-      console.error(err);
-      throw Error("Something went wrong!");
     }
   }
 }

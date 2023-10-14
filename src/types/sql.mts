@@ -5,7 +5,7 @@ interface filterType {
 }
 
 export interface ParsedSqlType {
-  command: "select";
+  command: "select" | "create";
   table: string;
   columns: string[];
   filters: filterType[] | null;
