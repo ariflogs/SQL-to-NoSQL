@@ -91,3 +91,6 @@ console.log(resp);
   - [ ] IS NULL
   - [ ] IS NOT NULL
 - [ ] Typescript Support
+
+## Contributing
+Read the [contributing guide](./CONTRIBUTING.md) to learn how you can contribute to this project.
