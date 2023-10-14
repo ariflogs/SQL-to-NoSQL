@@ -9,6 +9,12 @@ const runner = new SqlToNoSql({
 
 
 const main = async () => {
+  // Create a users table
+  const createUsers = await runner.run(
+    "create users"
+  );
+
+
   const resp = await runner.run(
     "select * from users where email = devarifhossain@gmail.com",
   );
