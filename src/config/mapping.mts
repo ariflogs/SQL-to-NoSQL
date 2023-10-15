@@ -1,13 +1,13 @@
 export const sqlToMongoDBcommandsMapping = {
-  select: "find", // s!
+  select: "find",
   insert: "insertMany",
   update: "updateMany",
   delete: "deleteMany",
 } as const;
 
 export const sqlToMongoDBoperatorsMapping = {
-  "=": "$eq", // s!
-  "!=": "$ne", // s!
+  "=": "$eq",
+  "!=": "$ne",
   ">": "$gt",
   "<": "$lt",
   ">=": "$gte",

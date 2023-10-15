@@ -1,6 +1,6 @@
 {
   "name": "sql-to-nosql",
-  "version": "0.1.01",
+  "version": "0.1.02",
   "description": "Run SQL quries on your Mongodb database.",
   "repository": {
     "type": "git",

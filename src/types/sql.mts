@@ -1,12 +1,14 @@
-interface filterType {
+export type SqlCommandOptions = "select" | "insert";
+
+interface FilterType {
   column: string;
   operator: "=";
   value: string | number;
 }
 
 export interface ParsedSqlType {
-  command: "select";
+  command: SqlCommandOptions;
   table: string;
   columns: string[];
-  filters: filterType[] | null;
+  filters: FilterType[] | null;
 }
