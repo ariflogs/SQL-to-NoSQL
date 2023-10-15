@@ -4,6 +4,7 @@ import { mappings } from "./config/mapping.mjs";
 import { parseQuery } from "./utils/parser.mjs";
 import { connect } from "./utils/database.mjs";
 import { SqlToNoSqlType } from "./types/index.mjs";
+import { MongoFindOperationType } from "types/nosql.mjs";
 
 export class SqlToNoSql {
   client: MongoClient | undefined;
@@ -22,28 +23,42 @@ export class SqlToNoSql {
 
     const q = parseQuery(query);
 
-    const filters: {
-      [key: string]: {
-        [operator: string]: string | number;
-      };
-    } = {};
+    if (q.command !== "select") {
+      throw new Error("Only select queries are supported");
+    }
+
+    const mongoQuery: MongoFindOperationType = {
+      collection: q.table,
+      [q.command]: mappings["mongodb"]["commands"][q.command],
+      query: {},
+      fields: {
+        // coz mongodb by default returns _id
+        _id: 0,
+      },
+    };
+
+    // Convert parsed columns to document fields
+    q.columns?.forEach((column) => {
+      if (column === "*") {
+        return;
+      }
+      if (column === "_id") {
+        mongoQuery.fields["_id"] = 1;
+        return;
+      }
+      mongoQuery.fields[column] = 1;
+    });
 
     // Convert parsed filters to MongoDB query
     q.filters?.forEach((filter) => {
       const { column, operator, value } = filter;
 
-      if (!filters[column]) {
-        filters[column] = {
+      if (!mongoQuery.query[column]) {
+        mongoQuery.query[column] = {
           [mappings["mongodb"]["operators"][operator]]: value,
         };
       }
     });
-
-    const mongoQuery = {
-      collection: q.table,
-      [q.command]: mappings["mongodb"]["commands"][q.command],
-      query: filters,
-    };
 
     try {
       if (!this.client) {
@@ -54,9 +69,9 @@ export class SqlToNoSql {
       const db = this.client.db();
       const collection = db.collection(mongoQuery.collection);
 
-      const data = await collection[mongoQuery[q.command]](
-        mongoQuery.query,
-      ).toArray();
+      const data = await collection[mongoQuery[q.command]](mongoQuery.query, {
+        projection: mongoQuery.fields,
+      }).toArray();
 
       return data;
     } catch (err) {

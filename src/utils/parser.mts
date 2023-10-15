@@ -10,7 +10,8 @@ export const parseQuery = (query: string): ParsedSqlType => {
     filters: null,
   };
 
-  const [command, ...rest] = query.split(" ");
+  // for splliting by comma and space
+  const [command, ...rest] = query.split(/, |,| /);
 
   const lowerCaseCommand = command.toLowerCase();
   if (lowerCaseCommand !== "select") {

@@ -12,6 +12,14 @@ The project is under active development and is not yet ready to use in productio
 
 ```bash
 npm insall sql-to-nosql
+
+# or
+
+yarn add sql-to-nosql
+
+# or
+
+pnpm add sql-to-nosql
 ```
 
 ## Usage
@@ -83,3 +91,7 @@ console.log(resp);
   - [ ] IS NULL
   - [ ] IS NOT NULL
 - [ ] Typescript Support
+
+## Contributing
+
+Read the [contributing guide](./CONTRIBUTING.md) to learn how you can contribute to this project.
