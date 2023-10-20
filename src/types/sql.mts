@@ -6,9 +6,17 @@ interface FilterType {
   value: string | number;
 }
 
+interface OrderByType {
+  column: string;
+  order: "asc" | "desc";
+}
+
 export interface ParsedSqlType {
   command: SqlCommandOptions;
   table: string;
   columns: string[];
   filters: FilterType[] | null;
+  orderBy: OrderByType | null;
+  limit: number | null;
+  offset: number | null;
 }
