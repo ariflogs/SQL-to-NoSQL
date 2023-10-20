@@ -60,9 +60,9 @@ console.log(resp);
   - [ ] UPDATE
 - [ ] Clauses
   - [x] WHERE
-  - [X] ORDER BY
-  - [X] LIMIT
-  - [X] OFFSET
+  - [x] ORDER BY
+  - [x] LIMIT
+  - [x] OFFSET
   - [ ] GROUP BY
   - [ ] HAVING
   - [ ] JOIN
