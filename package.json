@@ -14,7 +14,7 @@
     "check": "npx prettier . --check",
     "pretty": "npx prettier . --write",
     "build": "tsc && npm run check",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "author": {
     "name": "Arif Hossain",
@@ -30,7 +30,9 @@
   "license": "MIT",
   "devDependencies": {
     "prettier": "3.0.3",
-    "typescript": "^5.2.2"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "mongodb": "^6.1.0"
