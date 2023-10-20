@@ -5,11 +5,7 @@ import { parseQuery } from "./utils/parser.mjs";
 import { connect } from "./utils/database.mjs";
 import { SqlToNoSqlType } from "./types/index.mjs";
 import { MongoFindOperationType } from "types/nosql.mjs";
-import { sayHello } from "./gretting.mjs";
 
-var response = sayHello("Mehdi");
-
-console.log("Hello, world!");
 export class SqlToNoSql {
   client: MongoClient | undefined;
 
@@ -39,6 +35,7 @@ export class SqlToNoSql {
         // coz mongodb by default returns _id
         _id: 0,
       },
+      sort: {},
     };
 
     // Convert parsed columns to document fields
@@ -64,6 +61,12 @@ export class SqlToNoSql {
       }
     });
 
+    // Convert parsed orderBy to MongoDB sort
+    if (q.orderBy) {
+      const { column, order } = q.orderBy;
+      mongoQuery.sort[column] = order === "asc" ? 1 : -1;
+    }
+
     try {
       if (!this.client) {
         this.client = await connect(this.config.connection);
@@ -75,6 +78,7 @@ export class SqlToNoSql {
 
       const data = await collection[mongoQuery[q.command]](mongoQuery.query, {
         projection: mongoQuery.fields,
+        sort: mongoQuery.sort,
       }).toArray();
 
       return data;

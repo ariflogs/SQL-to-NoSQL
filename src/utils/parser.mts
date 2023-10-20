@@ -8,6 +8,7 @@ export const parseQuery = (query: string): ParsedSqlType => {
     table: "",
     columns: [],
     filters: null,
+    orderBy: null,
   };
 
   // for splliting by comma and space
@@ -17,7 +18,6 @@ export const parseQuery = (query: string): ParsedSqlType => {
   if (lowerCaseCommand !== "select") {
     throw new Error("Only select queries are supported");
   }
-  // parsedQuery.command = command;
 
   const fromIndex = rest.findIndex((word) => word.toLowerCase() === "from");
   if (fromIndex === -1) {
@@ -39,6 +39,21 @@ export const parseQuery = (query: string): ParsedSqlType => {
           String(rest[whereIndex + 3]).replace(/^'(.*)'$/, "$1"),
       },
     ];
+  }
+
+  const orderByIndex = rest.findIndex((word) => word.toLowerCase() === "order");
+  if (orderByIndex !== -1) {
+    // couldn't find index with "order by" coz we splitted by space!! 😶
+    // ikr, but it works though 🤷
+    if (rest[orderByIndex + 1].toLowerCase() !== "by") {
+      throw new Error("Invalid query, missing BY keyword");
+    }
+    parsedQuery.orderBy = {
+      column: rest[orderByIndex + 2], // coz "order by" is 2 words..
+      order: ["asc", "desc"].includes(rest[orderByIndex + 3])
+        ? (rest[orderByIndex + 3] as "asc" | "desc")
+        : "asc",
+    };
   }
 
   return parsedQuery;

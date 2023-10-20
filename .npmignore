@@ -4,3 +4,4 @@ test
 .gitignore
 TODO.md
 CONTRIBUTING.md
+dist/debug.mjs

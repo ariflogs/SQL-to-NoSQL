@@ -13,9 +13,14 @@ export interface MongoFieldSelectionType {
   [key: string]: 1 | 0;
 }
 
+export interface MongoSortType {
+  [key: string]: 1 | -1;
+}
+
 export interface MongoFindOperationType {
   select: (typeof mappings)["mongodb"]["commands"]["select"]; // sql -> mongodb
   collection: string;
   query: MongoQueryType;
   fields: MongoFieldSelectionType;
+  sort: MongoSortType;
 }

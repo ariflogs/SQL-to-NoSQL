@@ -60,7 +60,7 @@ console.log(resp);
   - [ ] UPDATE
 - [ ] Clauses
   - [x] WHERE
-  - [ ] ORDER BY
+  - [X] ORDER BY
   - [ ] LIMIT
   - [ ] OFFSET
   - [ ] GROUP BY
