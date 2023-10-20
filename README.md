@@ -61,8 +61,8 @@ console.log(resp);
 - [ ] Clauses
   - [x] WHERE
   - [X] ORDER BY
-  - [ ] LIMIT
-  - [ ] OFFSET
+  - [X] LIMIT
+  - [X] OFFSET
   - [ ] GROUP BY
   - [ ] HAVING
   - [ ] JOIN

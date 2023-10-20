@@ -23,4 +23,6 @@ export interface MongoFindOperationType {
   query: MongoQueryType;
   fields: MongoFieldSelectionType;
   sort: MongoSortType;
+  limit: number | null;
+  skip: number | null;
 }

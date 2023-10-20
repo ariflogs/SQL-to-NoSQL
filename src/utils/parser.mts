@@ -9,6 +9,8 @@ export const parseQuery = (query: string): ParsedSqlType => {
     columns: [],
     filters: null,
     orderBy: null,
+    limit: null,
+    offset: null,
   };
 
   // for splliting by comma and space
@@ -54,6 +56,16 @@ export const parseQuery = (query: string): ParsedSqlType => {
         ? (rest[orderByIndex + 3] as "asc" | "desc")
         : "asc",
     };
+  }
+
+  const limitIndex = rest.findIndex((word) => word.toLowerCase() === "limit");
+  if (limitIndex !== -1) {
+    parsedQuery.limit = Number(rest[limitIndex + 1]);
+  }
+
+  const offsetIndex = rest.findIndex((word) => word.toLowerCase() === "offset");
+  if (offsetIndex !== -1) {
+    parsedQuery.offset = Number(rest[offsetIndex + 1]);
   }
 
   return parsedQuery;

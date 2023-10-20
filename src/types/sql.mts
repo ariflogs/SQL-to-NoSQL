@@ -17,4 +17,6 @@ export interface ParsedSqlType {
   columns: string[];
   filters: FilterType[] | null;
   orderBy: OrderByType | null;
+  limit: number | null;
+  offset: number | null;
 }

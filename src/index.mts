@@ -36,6 +36,8 @@ export class SqlToNoSql {
         _id: 0,
       },
       sort: {},
+      limit: q.limit,
+      skip: q.offset,
     };
 
     // Convert parsed columns to document fields
@@ -79,6 +81,8 @@ export class SqlToNoSql {
       const data = await collection[mongoQuery[q.command]](mongoQuery.query, {
         projection: mongoQuery.fields,
         sort: mongoQuery.sort,
+        limit: q.limit || 0,
+        skip: q.offset || 0,
       }).toArray();
 
       return data;
