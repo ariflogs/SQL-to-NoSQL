@@ -5,7 +5,11 @@ import { parseQuery } from "./utils/parser.mjs";
 import { connect } from "./utils/database.mjs";
 import { SqlToNoSqlType } from "./types/index.mjs";
 import { MongoFindOperationType } from "types/nosql.mjs";
+import { sayHello } from "./gretting.mjs";
 
+var response = sayHello("Mehdi");
+
+console.log("Hello, world!");
 export class SqlToNoSql {
   client: MongoClient | undefined;
 
