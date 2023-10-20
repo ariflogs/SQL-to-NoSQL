@@ -5,3 +5,5 @@ test
 TODO.md
 CONTRIBUTING.md
 dist/debug.mjs
+__tests__
+docker
