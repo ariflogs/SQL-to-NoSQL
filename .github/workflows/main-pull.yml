@@ -10,7 +10,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
             - name: Install dependencies and build 🔧
-              run: npm ci && npm run build
+              run: pnpm i && pnpm build
             - name: Run tests 🧪
-              run: npm run test:prod
+              run: pnpm test:prod
             
