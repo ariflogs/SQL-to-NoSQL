@@ -40,13 +40,10 @@ const insertUser = async () => {
   await client.close();
 };
 
-console.log("before insert");
 (async () => {
   await insertUser();
 })();
-console.log("after insert");
 
-console.log("before test");
 test("Find user with email = arif@gmail.com", async () => {
   const result = await runner.run(
     "select name, email, phone, age from users where email = 'arif@gmail.com'",
@@ -55,7 +52,6 @@ test("Find user with email = arif@gmail.com", async () => {
 
   expect(result[0].email).toBe(userData[0].email);
 });
-console.log("after test");
 
 test("Find collection count", async () => {
   const result = await runner.run("select * from users");
