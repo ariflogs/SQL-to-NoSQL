@@ -1,16 +1,15 @@
 name: Check if everything in shape
 on:
-    pull_request:
-        branches:
-            - main
+  pull_request:
+    branches:
+      - main
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-            - name: Install dependencies and build 🔧
-              run: pnpm i && pnpm build
-            - name: Run tests 🧪
-              run: pnpm test:prod
-            
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies and build 🔧
+        run: pnpm i && pnpm build
+      - name: Run tests 🧪
+        run: pnpm test:prod
