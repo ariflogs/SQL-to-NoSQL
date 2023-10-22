@@ -15,7 +15,7 @@ jobs:
           node-version: 18
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies and build 🔧
-        run: pnpm i && pnpm build
+        run: npm i && npm build
       - name: Publish package on NPM 📦
         run: npm publish
         env:
