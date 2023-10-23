@@ -1,0 +1,15 @@
+version: "3.1"
+name: SQL-to-NoSQL
+
+services:
+  mongo:
+    image: mongo:7.0-jammy
+    ports:
+      # host:container
+      - 27017:27017
+    volumes:
+      - ./data:/data/db
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass

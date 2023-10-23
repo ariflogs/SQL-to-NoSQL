@@ -1,6 +1,6 @@
-// select * from users where id = 1;
-
-import { ParsedSqlType } from "types/sql.mjs";
+import { mappings } from "../config/mapping.mjs";
+import { MongoFindOperationType } from "../types/nosql.mjs";
+import { ParsedSqlType } from "../types/sql.mjs";
 
 export const parseQuery = (query: string): ParsedSqlType => {
   const parsedQuery: ParsedSqlType = {
@@ -69,4 +69,62 @@ export const parseQuery = (query: string): ParsedSqlType => {
   }
 
   return parsedQuery;
+};
+
+export const parsedQueryToMongoQuery = (
+  q: ParsedSqlType,
+): MongoFindOperationType => {
+  if (q.command !== "select") {
+    throw new Error("Only select queries are supported");
+  }
+
+  const mongoQuery: MongoFindOperationType = {
+    collection: q.table,
+    [q.command]: mappings["mongodb"]["commands"][q.command],
+    query: {},
+    fields: {
+      // coz mongodb by default returns _id
+      _id: 0,
+    },
+    sort: {},
+    limit: q.limit,
+    skip: q.offset,
+  };
+
+  // Convert parsed columns to document fields
+  if (q.columns) {
+    q.columns.forEach((column) => {
+      if (column === "*") {
+        // If "SELECT *" is used, don't specify fields property
+        return;
+      }
+      if (column === "_id") {
+        mongoQuery.fields["_id"] = 1;
+      } else {
+        mongoQuery.fields[column] = 1;
+      }
+    });
+  }
+
+  // Convert parsed filters to MongoDB query
+  if (q.filters) {
+    q.filters.forEach((filter) => {
+      const { column, operator, value } = filter;
+
+      if (!mongoQuery.query[column]) {
+        mongoQuery.query[column] = {};
+      }
+
+      mongoQuery.query[column][mappings["mongodb"]["operators"][operator]] =
+        value;
+    });
+  }
+
+  // Convert parsed orderBy to MongoDB sort
+  if (q.orderBy) {
+    const { column, order } = q.orderBy;
+    mongoQuery.sort[column] = order === "asc" ? 1 : -1;
+  }
+
+  return mongoQuery;
 };
