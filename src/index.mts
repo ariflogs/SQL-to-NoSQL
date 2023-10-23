@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 import { mappings } from "./config/mapping.mjs";
-import { parseQuery } from "./utils/parser.mjs";
+import { parseQuery, parsedQueryToMongoQuery } from "./utils/parser.mjs";
 import { connect } from "./utils/database.mjs";
 import { SqlToNoSqlType } from "./types/index.mjs";
 import { MongoFindOperationType } from "types/nosql.mjs";
@@ -21,52 +21,15 @@ export class SqlToNoSql {
     //   throw new Error("Invalid query, your query contains invalid characters!");
     // }
 
-    const q = parseQuery(query);
-
-    if (q.command !== "select") {
+    const parsedQuery = parseQuery(query);
+    if (parsedQuery.command !== "select") {
       throw new Error("Only select queries are supported");
     }
+    const mongoQuery: MongoFindOperationType =
+      parsedQueryToMongoQuery(parsedQuery);
 
-    const mongoQuery: MongoFindOperationType = {
-      collection: q.table,
-      [q.command]: mappings["mongodb"]["commands"][q.command],
-      query: {},
-      fields: {
-        // coz mongodb by default returns _id
-        _id: 0,
-      },
-      sort: {},
-      limit: q.limit,
-      skip: q.offset,
-    };
-
-    // Convert parsed columns to document fields
-    q.columns?.forEach((column) => {
-      if (column === "*") {
-        return;
-      }
-      if (column === "_id") {
-        mongoQuery.fields["_id"] = 1;
-        return;
-      }
-      mongoQuery.fields[column] = 1;
-    });
-
-    // Convert parsed filters to MongoDB query
-    q.filters?.forEach((filter) => {
-      const { column, operator, value } = filter;
-
-      if (!mongoQuery.query[column]) {
-        mongoQuery.query[column] = {
-          [mappings["mongodb"]["operators"][operator]]: value,
-        };
-      }
-    });
-
-    // Convert parsed orderBy to MongoDB sort
-    if (q.orderBy) {
-      const { column, order } = q.orderBy;
-      mongoQuery.sort[column] = order === "asc" ? 1 : -1;
+    if (query !== "select") {
+      throw new Error("Only select queries are supported");
     }
 
     try {
@@ -78,12 +41,15 @@ export class SqlToNoSql {
       const db = this.client.db();
       const collection = db.collection(mongoQuery.collection);
 
-      const data = await collection[mongoQuery[q.command]](mongoQuery.query, {
-        projection: mongoQuery.fields,
-        sort: mongoQuery.sort,
-        limit: q.limit || 0,
-        skip: q.offset || 0,
-      }).toArray();
+      const data = await collection[mongoQuery[parsedQuery.command]](
+        mongoQuery.query,
+        {
+          projection: mongoQuery.fields,
+          sort: mongoQuery.sort,
+          limit: mongoQuery.limit || 0,
+          skip: mongoQuery.skip || 0,
+        },
+      ).toArray();
 
       return data;
     } catch (err) {
