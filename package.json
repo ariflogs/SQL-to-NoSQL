@@ -1,6 +1,6 @@
 {
   "name": "sql-to-nosql",
-  "version": "0.1.03",
+  "version": "0.1.04",
   "description": "Run SQL quries on your Mongodb database.",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
     "start": "tsc && node dist/index.mjs",
     "check": "npx prettier . --check",
     "pretty": "npx prettier . --write",
-    "build": "tsc && npm run check",
+    "build": "tsc && pnpm pretty && pnpm check",
     "test:dev": "vitest watch",
     "test:prod": "bash ./scripts/run-unit-test.sh"
   },
