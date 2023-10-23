@@ -1,8 +1,6 @@
-// select * from users where id = 1;
-
-import { mappings } from "config/mapping.mjs";
-import { MongoFindOperationType } from "types/nosql.mjs";
-import { ParsedSqlType } from "types/sql.mjs";
+import { mappings } from "../config/mapping.mjs";
+import { MongoFindOperationType } from "../types/nosql.mjs";
+import { ParsedSqlType } from "../types/sql.mjs";
 
 export const parseQuery = (query: string): ParsedSqlType => {
   const parsedQuery: ParsedSqlType = {

@@ -15,7 +15,7 @@
     "pretty": "npx prettier . --write",
     "build": "tsc && npm run check",
     "test:dev": "vitest watch",
-    "test:prod": "bash ./scripts/run-test.sh"
+    "test:prod": "bash ./scripts/run-unit-test.sh"
   },
   "author": {
     "name": "Arif Hossain",
