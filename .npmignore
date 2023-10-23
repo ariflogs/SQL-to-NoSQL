@@ -7,3 +7,4 @@ CONTRIBUTING.md
 dist/debug.mjs
 __tests__
 docker
+docker/data

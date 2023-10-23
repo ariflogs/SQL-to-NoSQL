@@ -4,3 +4,4 @@ build
 dist
 TODO.md
 src/debug.mts
+docker/data
